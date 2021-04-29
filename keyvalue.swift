@@ -9,6 +9,7 @@ class Person : NSObject {
 let p = Person()
 p.firstName = "Fred"
 // {{## END class-decl ##}}
+
 // {{## BEGIN class-kp ##}}
 let pkeyPath = #keyPath(Person.firstName)
 if let value = p.value(forKey: pkeyPath) {
@@ -32,6 +33,7 @@ p.setValue("Barney", forKey: pkeyPath)
 p.setValue("Wilma", forKey: "firstName")
 p.firstName = "Fred"
 // {{## END class-observe ##}}
+
 // {{## BEGIN class-subject-observer ##}}
 class Observer : NSObject {
   override func observeValue(forKeyPath keyPath: String?, 
