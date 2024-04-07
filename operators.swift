@@ -1,5 +1,42 @@
 import Foundation
 
+// {{## BEGIN struct-equals ##}}
+struct Point {
+  // standard properties
+  var x : Int32
+  var y : Int32
+  init(x:Int32, y:Int32) {
+    self.x = x
+    self.y = y
+  }
+  static func ==(left: Point, right: Point) -> Bool {
+    return (left.x == right.x) && (left.y == right.y)
+  }
+  static func !=(left: Point, right: Point) -> Bool {
+    return (left.x != right.x) || (left.y != right.y)
+  }
+}
+let origin = Point(x: 0, y: 0)
+let anotherPt = Point(x: 1, y: 1)
+if origin != anotherPt {
+  print("Nope! Different places on the grid")
+}
+if origin == anotherPt {
+  print("They point to the same place!")
+}
+// {{## END struct-equals ##}}
+
+// {{## BEGIN custom-operator ##}}
+infix operator <==>
+extension Point {
+  static func <==>(left: Point, right: Point) -> Point {
+    return Point(x: left.x, y: right.y)
+  }
+}
+let ufoPt = origin <==> anotherPt
+print(ufoPt)
+// {{## END custom-operator ##}}
+
 // {{## BEGIN simple-operator ##}}
 func +(left: [Double], right: [Double]) -> [Double] {
     var sum = [Double](repeating: 0.0, count: left.count)
@@ -8,7 +45,7 @@ func +(left: [Double], right: [Double]) -> [Double] {
     }
     return sum
 }
-let result = [1, 2] + [3, 4]
+let result = [1.0, 2.0] + [3, 4]
 print(result)
 // {{## END simple-operator ##}}
 

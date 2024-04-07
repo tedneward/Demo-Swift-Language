@@ -485,12 +485,12 @@ struct Point {
   static func compare(left: Point, right: Point) -> Bool {
     return (left.x == right.x) && (left.y == right.y)
   }
-  mutating func move(x: Int32, y: Int32) -> Void {
+  func move(x: Int32, y: Int32) -> Void {
     // Two ways to do this:
     // assignment to properties...
     // self.x = x; self.y = y
     // ... or assignment to self
-    self = Point(x: self.x + x, y: self.y + y)
+    //self = Point(x: self.x + x, y: self.y + y)
   }
   // {{## END methods ##}}
   
@@ -541,10 +541,20 @@ class Person {
   var lastName : String
   var age : UInt8
   var location: Point
+
+    static var population : UInt = 0
+    
+    var fullName : String {
+        get {
+            return firstName + " " + lastName
+        }
+    }
   
-  init(firstName fn: String, lastName ln : String,
-    age: UInt8, location loc: Point?)
+  init(firstName fn: String = "", lastName ln : String = "",
+    age: UInt8 = 0, location loc: Point? = nil)
   {
+      Person.population += 1
+
     self.firstName = fn
     self.lastName = ln
     self.age = age
@@ -570,13 +580,18 @@ class Person {
 // {{## END class-2 ##}}
   
 // {{## BEGIN identity ##}}
-var ted = Person(firstName:"Ted", lastName:"Neward", age:42, location:nil)
+var ted = Person(firstName: "", lastName: "Neward", age: 42, location: nil)
+print(ted.firstName)
 var ted2 = ted
   // These point to the same object
 ted.firstName = "Theodore"
+print(ted.fullName)
 print(ted.stringified)
 print(ted2.stringified) // "Theodore"
 // {{## END identity ##}}
+
+let pt = Point(x: 0, y: 0)
+pt.move(x: 5, y: 5)
 
 // {{## BEGIN inheritance ##}}
 class Student : Person
@@ -670,7 +685,7 @@ let chips = try? vm.vend(itemNamed: "Chips")
 print(chips)
 let coke = try? vm.vend(itemNamed: "Coke")
 print(coke)
-let drPepper = try! vm.vend(itemNamed: "Dr Pepper")
+//let drPepper = try! vm.vend(itemNamed: "Dr Pepper")
     // BOOM: "fatal error: 'try!' expression unexpectedly ...
 // {{## END try ##}}
 
@@ -807,7 +822,7 @@ func +(left: [Double], right: [Double]) -> [Double] {
     }
     return sum
 }
-let opresult = [1, 2] + [3, 4]
+let opresult = [1.0, 2.0] + [3.0, 4.0]
 print(opresult)
 // {{## END simple-operator ##}}
 

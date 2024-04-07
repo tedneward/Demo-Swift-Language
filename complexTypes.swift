@@ -1,4 +1,3 @@
-do {
 // {{## BEGIN struct ##}}
 struct Point {
   // standard properties
@@ -32,6 +31,8 @@ struct Point {
   static func compare(left: Point, right: Point) -> Bool {
     return (left.x == right.x) && (left.y == right.y)
   }
+  // {{## END methods ##}}
+  // {{## BEGIN mutating-methods ##}}
   mutating func move(x: Int32, y: Int32) -> Void {
     // Two ways to do this: 
     // assignment to properties...
@@ -39,7 +40,7 @@ struct Point {
     // ... or assignment to self
     self = Point(x: self.x + x, y: self.y + y)
   }
-  // {{## END methods ##}}
+  // {{## END mutating-methods ##}}
   
   
   // {{## BEGIN initializers ##}}
@@ -70,7 +71,7 @@ var anotherPoint = aPoint
 aPoint.x = 12
 print("anotherPoint = \(anotherPoint), aPoint = \(aPoint)")
 // {{## END instantiation ##}}
-  
+
 // {{## BEGIN methods ##}}
 var o = Point.ORIGIN
 print(o.stringRep())
@@ -104,6 +105,7 @@ class Person {
   }
 // {{## END class ##}}
 // {{## BEGIN class-2 ##}}
+  // This is a read-only computed property
   var stringified : String {
     get {
       return "[Person lastName:\(lastName) " +
@@ -131,5 +133,3 @@ class Student : Person
   // Student has everything defined on Person
 }
 // {{## END inheritance ##}}
-
-}
